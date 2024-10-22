@@ -1,0 +1,19 @@
+@startuml
+skinparam componentStyle uml1
+[Another component] as Comp2
+component Comp3
+component [Last\ncomponent] as Comp4
+
+
+
+DataAccess - [First Component]
+[First Component] ..> HTTP : use
+note left of HTTP : Web Service only
+
+note right of [First Component]
+  A note can also
+  be on several lines
+end note
+
+
+@enduml

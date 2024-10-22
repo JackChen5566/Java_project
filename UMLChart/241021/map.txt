@@ -1,0 +1,27 @@
+
+
+@startuml
+
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: Another authentication Response
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: Another authentication Response
+
+Alice -> David: Another authentication Request
+Alice <-- David: Another authentication Response
+
+Alice ->X Bob: Another authentication Request
+Alice <-- Bob: Another 
+Alice ->> Bob: Another authentication Request
+Alice /-- Bob: Another authentication Response
+Alice -// Bob: Another authentication Request
+Alice o<-- Bob: Another authentication Response
+
+Bob <- Alice: Authentication Request
+Bob --> Alice: Authentication Response
+
+
+
+
+@enduml
