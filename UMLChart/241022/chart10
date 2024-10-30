@@ -1,0 +1,10 @@
+@startuml
+class Dummy {
+ -field1
+ #field2
+ {static} String id
+ ~method1()
+ +method2()
+ {abstract} void method()
+}
+@enduml

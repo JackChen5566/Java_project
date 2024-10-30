@@ -1,0 +1,15 @@
+@startuml
+Class01 <|-- Class02
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 -- Class10
+
+class 汽車
+發動機 - 汽車 : 驅動 >
+汽車 *- 輪子 : 4個 >
+汽車 -- 人 : < 屬於
+
+
+
+@enduml

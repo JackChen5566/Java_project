@@ -1,0 +1,34 @@
+
+
+@startuml
+Alice->Bob : hello
+note left: this is a first note
+
+Bob->Alice : ok
+note right: this is another note 
+
+Bob->Bob : I am thinking
+note left #blue
+a note
+can also be defined
+on several lines
+end note
+Alice->Alice : I am thinking
+note right #aqua
+a note
+can also be defined
+on several lines
+end note
+
+note over Alice: this is another note 
+note over Alice,Bob #green : this is another note
+
+autonumber 10
+Alice -> Bob
+note right
+  the <U+0025>autonumber<U+0025> works everywhere.
+  Here, its value is ** %autonumber% **
+end note
+Bob --> Alice: //This is the response %autonumber%// 
+
+@enduml
