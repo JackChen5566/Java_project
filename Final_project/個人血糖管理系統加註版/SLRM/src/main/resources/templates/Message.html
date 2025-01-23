@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Board</title>
+    <style>
+        /* 設置全局樣式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #2d2d2d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 容器樣式 */
+        .container {
+            width: 600px;
+            max-width: 90%;
+        }
+
+        /* 標題樣式 */
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* 留言表單樣式 */
+        form.message-form {
+            position: fixed;
+            top: 60px; /* 往上移 */
+            left: 10px;
+            width: 90%;
+            max-width: 600px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            text-align: left;
+        }
+
+        /* 文本區域樣式 */
+        textarea {
+            width: 100%;
+            max-width: 560px;
+            margin-bottom: 10px;
+        }
+
+        /* 按鈕樣式 */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* 按鈕懸停效果 */
+        button:hover {
+            filter: brightness(90%);
+        }
+
+        /* 留言容器樣式 */
+        .messages-container {
+            margin-top: 160px; /* 相應調整下方容器 */
+            max-height: 800px;
+            overflow-y: scroll;
+            width: 100%;
+            text-align: center; /* 確保留言內容居中 */
+        }
+
+        /* 單個留言樣式 */
+        .message {
+            background-color: #f0f0f0;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center; /* 確保每條留言內容居中 */
+        }
+
+        /* 按鈕容器樣式 */
+        .buttons-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* 登出按鈕樣式 */
+        .logout button {
+            background-color: #FF6347; /* Tomato */
+        }
+
+        /* 發佈留言按鈕樣式 */
+        .post-message-button {
+            background-color: #1E90FF; /* DodgerBlue */
+        }
+
+        /* 返回首頁按鈕樣式 */
+        .home-button {
+            background-color: #808080; /* Grey */
+        }
+
+        .home-button:hover {
+            background-color: #696969;
+        }
+
+        /* 修改按鈕樣式 */
+        .edit-button {
+            background-color: #FFD700; /* Gold */
+        }
+
+        .edit-button:hover {
+            background-color: #FFC700;
+        }
+
+        /* 刪除按鈕樣式 */
+        .delete-button {
+            background-color: #DC143C; /* Crimson */
+        }
+
+        .delete-button:hover {
+            background-color: #C71585;
+        }
+
+        /* 管理按鈕樣式 */
+        .admin-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    
+<div class="buttons-container">
+    <!-- 返回首頁按鈕 -->
+    <button class="home-button" onclick="location.href='/'">返回首頁</button>
+    <div class="logout">
+        <!-- 登出表單 -->
+        <form method="post" th:action="@{/logout}">
+            <button type="submit">登出</button>
+        </form>
+    </div>
+</div>
+
+<!-- 留言表單 -->
+<form method="post" class="message-form" th:action="@{/messages}">
+    <textarea name="content" rows="3" cols="50" maxlength="200" placeholder="說點什麼..."></textarea><br>
+    <p style="font-size: 12px; color: #2d2d2d;">最多200字</p>
+    <button type="submit" class="post-message-button">上傳留言</button>
+    <br>
+    <p>總留言數: <span th:text="${messages != null ? #lists.size(messages) : 0}"></span></p>
+</form>
+
+<!-- 留言顯示區域 -->
+<div class="messages-container">
+    <div th:each="message : ${messages}" class="message">
+        <p><b th:text="${message.username}"></b>: <span th:text="${message.content}"></span></p>
+        <p th:text="${message.timestamp}"></p>
+
+        <!-- 管理按鈕區域 -->
+        <div th:if="${isAdmin}" class="admin-buttons">
+            <form method="get" th:action="@{/messages/edit}">
+                <input type="hidden" name="id" th:value="${message.id}" />
+                <button type="submit" class="edit-button">修改</button>
+            </form>
+            <form method="post" th:action="@{/messages/delete}">
+                <input type="hidden" name="id" th:value="${message.id}" />
+                <button type="submit" class="delete-button">刪除</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

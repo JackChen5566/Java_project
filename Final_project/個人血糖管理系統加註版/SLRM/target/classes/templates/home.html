@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>血糖紀錄</title>
+    <style>
+        /* 設置全局樣式 */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+        .header span {
+            font-size: 18px;
+        }
+        .header button {
+            background-color: #D3D3D3;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .header button:hover {
+            background-color: #A9A9A9;
+        }
+        .header button:active {
+            transform: scale(0.95);
+        }
+        .record-form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 300px;
+            margin-top: 20px;
+        }
+        .record-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .record-form input, .record-form select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .record-form button {
+            background-color: #1E90FF;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .record-form button:hover {
+            background-color: #1C86EE;
+        }
+        .record-form button:active {
+            transform: scale(0.95);
+        }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .buttons button:hover {
+            transform: scale(1.05);
+        }
+        .buttons button:active {
+            transform: scale(0.95);
+        }
+        .orange-button {
+            background-color: #FFA500;
+            border: none;
+            color: white;
+        }
+        .orange-button:hover {
+            background-color: #FF8C00;
+        }
+        .green-button {
+            background-color: #32CD32;
+            border: none;
+            color: white;
+        }
+        .green-button:hover {
+            background-color: #2E8B57;
+        }
+        .red-button {
+            background-color: #FF0000;
+            border: none;
+            color: white;
+        }
+        .red-button:hover {
+            background-color: #DC143C;
+        }
+        .edit-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+        }
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+        .feedback-button {
+            background-color: #6A5ACD;
+            border: none;
+            color: white;
+        }
+        .feedback-button:hover {
+            background-color: #483D8B;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span>個人家用血糖管理平台首頁</span>
+            <form method="post" th:action="@{/logout}">
+                <button type="submit">登出</button>
+            </form>
+        </div>
+        <form method="post" class="record-form" th:action="@{/records}">
+            <label for="date">測試日期</label>
+            <input type="date" id="date" name="date">
+            <label for="time">測試時間</label>
+            <input type="time" id="time" name="time">
+            <label for="value">檢驗數值</label>
+            <input type="text" id="value" name="value" placeholder="輸入" /> mg/dL
+            <button type="submit">送出</button>
+        </form>
+        <div class="buttons">
+            <button class="orange-button" onclick="window.location.href='/search'">搜尋指定區間血糖紀錄</button>
+            <button class="green-button" onclick="window.location.href='/edit'">修改個人歷史數據</button>
+            <button class="feedback-button" onclick="window.location.href='/messages'">留言反饋區</button>
+        </div>
+    </div>
+</body>
+</html>

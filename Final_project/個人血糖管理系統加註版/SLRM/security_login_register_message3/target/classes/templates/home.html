@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Board</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            width: 600px;
+            max-width: 90%;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        form.message-form {
+            position: fixed;
+            top: 120px;
+            width: 100%;
+            max-width: 600px;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 560px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .messages-container {
+            margin-top: 220px; 
+            max-height: 800px;
+            overflow-y: scroll;
+            width: 100%;
+        }
+
+        .message {
+            background-color: #444;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+	
+<div class="logout">
+	<h1>Welcome to the Message Board</h1>
+	    <form method="post" th:action="@{/logout}">
+	        <button type="submit">Logout</button>
+	    </form>
+		
+		
+		
+</div>
+
+
+<form method="post" class="message-form" th:action="@{/messages}">
+		    <textarea name="content" rows="3" cols="50" maxlength="200" placeholder="說點什麼..."></textarea><br>
+		    <p style="font-size: 12px; color: #aaa;">最多200字</p>
+		    <button type="submit">Post Message</button>
+			<br>
+			<p>Total Messages: <span th:text="${messages != null ? #lists.size(messages) : 0}"></span></p>
+</form>
+		
+
+
+
+<div class="messages-container">
+    
+    <div th:each="message : ${messages}" class="message">
+        <p><b th:text="${message.username}"></b>: <span th:text="${message.content}"></span></p>
+        <p th:text="${message.timestamp}"></p>
+
+        <!-- Admin Edit/Delete Buttons -->
+        <div th:if="${isAdmin}">
+            <form method="get" th:action="@{/messages/edit}">
+                <input type="hidden" name="id" th:value="${message.id}" />
+                <button type="submit">Edit</button>
+            </form>
+            <form method="post" th:action="@{/messages/delete}">
+                <input type="hidden" name="id" th:value="${message.id}" />
+                <button type="submit" style="background-color: #f44336;">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

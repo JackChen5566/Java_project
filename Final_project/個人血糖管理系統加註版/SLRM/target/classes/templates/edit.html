@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改個人歷史血糖數據</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+        }
+        .form-group label {
+            width: 45%;
+        }
+        .form-group input {
+            width: 45%;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .button {
+            background-color: #FFA500;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #FF8C00;
+            transform: scale(1.05);
+        }
+        .button:active {
+            transform: scale(0.95);
+        }
+        .header-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #D3D3D3;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .header-button:hover {
+            background-color: #A9A9A9;
+        }
+        .header-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+    <script>
+        // 返回首頁
+        function goToHomePage() {
+            window.location.href = '/';
+        }
+
+        // 處理表單提交
+        function handleEdit(event) {
+            event.preventDefault();
+            const date = document.getElementById('start-date').value;
+            const time = document.getElementById('test-time').value;
+            const value = document.getElementById('test-value').value;
+
+            // 發送POST請求
+            fetch('/edit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date, time, value })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/success'; // 成功後重定向到成功頁面
+                } else {
+                    alert('提交失敗，請再試一次。');
+                }
+            }).catch(error => {
+                alert('提交過程中發生錯誤：' + error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <button class="header-button" onclick="goToHomePage()">返回首頁</button>
+    <div class="container">
+        <h1>修改個人歷史血糖數據</h1>
+        <form onsubmit="handleEdit(event)">
+            <div class="form-group">
+                <label for="start-date">測試日期</label>
+                <input type="date" id="start-date" required>
+            </div>
+            <div class="form-group">
+                <label for="test-time">測試時間</label>
+                <input type="time" id="test-time" required>
+            </div>
+            <div class="form-group">
+                <label for="test-value">檢驗數值</label>
+                <input type="text" id="test-value" placeholder="輸入" required> mg/dL
+            </div>
+            <button class="button" type="submit">送出</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜尋指定區間血糖紀錄</title>
+    <style>
+        /* 設置全局樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="date"] {
+            padding: 5px;
+            font-size: 16px;
+        }
+        /* 按鈕樣式 */
+        .button {
+            background-color: #FFA500;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #FF8C00;
+            transform: scale(1.05);
+        }
+        .button:active {
+            transform: scale(0.95);
+        }
+        .header-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #D3D3D3;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .header-button:hover {
+            background-color: #A9A9A9;
+        }
+        .header-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+    <script>
+        // 返回首頁
+        function goToHomePage() {
+            window.location.href = '/';
+        }
+
+        // 處理表單提交
+        function handleSubmit(event) {
+            event.preventDefault();
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            window.location.href = `/results?startDate=${startDate}&endDate=${endDate}`;
+        }
+    </script>
+</head>
+<body>
+    <button class="header-button" onclick="goToHomePage()">返回首頁</button>
+    <div class="container">
+        <h1>搜尋指定區間血糖紀錄</h1>
+        <p>最大搜尋僅三十筆</p>
+        <!-- 搜尋表單 -->
+        <form onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="start-date">測試起始日期</label>
+                <input type="date" id="start-date" required>
+            </div>
+            <div class="form-group">
+                <label for="end-date">測試結束日期</label>
+                <input type="date" id="end-date" required>
+            </div>
+            <button class="button" type="submit">送出</button>
+        </form>
+    </div>
+</body>
+</html>
